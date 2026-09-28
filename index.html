@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A beautifully designed to-do list application to organize your tasks with priorities, categories, and smart filtering.">
+  <title>Taskflow — Smart To-Do List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="ambient-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="app-container">
+    <header class="app-header">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect x="2" y="2" width="24" height="24" rx="7" stroke="url(#logoGrad)" stroke-width="2.5"/>
+            <path d="M9 14.5L12.5 18L19 10" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="logoGrad" x1="2" y1="2" x2="26" y2="26">
+                <stop stop-color="#a78bfa"/>
+                <stop offset="1" stop-color="#6366f1"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h1>Taskflow</h1>
+      </div>
+      <div class="header-stats">
+        <div class="stat" id="stat-total">
+          <span class="stat-value">0</span>
+          <span class="stat-label">Total</span>
+        </div>
+        <div class="stat" id="stat-active">
+          <span class="stat-value">0</span>
+          <span class="stat-label">Active</span>
+        </div>
+        <div class="stat" id="stat-done">
+          <span class="stat-value">0</span>
+          <span class="stat-label">Done</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="input-section">
+      <form id="task-form" class="task-input-wrapper">
+        <div class="input-row">
+          <button type="button" class="priority-btn" id="priority-toggle" title="Set priority">
+            <span class="priority-dot"></span>
+          </button>
+          <input
+            type="text"
+            id="task-input"
+            class="task-input"
+            placeholder="What needs to be done?"
+            autocomplete="off"
+            maxlength="200"
+          />
+          <button type="submit" class="add-btn" id="add-btn" title="Add task">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="input-meta">
+          <div class="category-selector" id="category-selector">
+            <button type="button" class="cat-chip active" data-category="personal">
+              <span class="cat-dot" style="background: #a78bfa"></span>Personal
+            </button>
+            <button type="button" class="cat-chip" data-category="work">
+              <span class="cat-dot" style="background: #6ee7b7"></span>Work
+            </button>
+            <button type="button" class="cat-chip" data-category="health">
+              <span class="cat-dot" style="background: #fbbf24"></span>Health
+            </button>
+            <button type="button" class="cat-chip" data-category="learning">
+              <span class="cat-dot" style="background: #f472b6"></span>Learning
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="filters-bar">
+      <div class="filter-tabs" id="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="active">Active</button>
+        <button class="filter-tab" data-filter="completed">Completed</button>
+      </div>
+      <button class="clear-btn" id="clear-completed" title="Clear completed tasks">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 4h12M5.333 4V2.667a1.333 1.333 0 011.334-1.334h2.666a1.333 1.333 0 011.334 1.334V4m2 0v9.333a1.333 1.333 0 01-1.334 1.334H4.667a1.333 1.333 0 01-1.334-1.334V4h9.334z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Clear done
+      </button>
+    </div>
+
+    <div class="task-list-container">
+      <ul class="task-list" id="task-list"></ul>
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <rect x="12" y="8" width="40" height="48" rx="8" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+            <path d="M24 24h16M24 32h12M24 40h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.25"/>
+            <circle cx="48" cy="48" r="12" fill="url(#emptyGrad)"/>
+            <path d="M44 48h8M48 44v8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="emptyGrad" x1="36" y1="36" x2="60" y2="60">
+                <stop stop-color="#a78bfa"/>
+                <stop offset="1" stop-color="#6366f1"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <p class="empty-title">No tasks yet</p>
+        <p class="empty-subtitle">Add your first task to get started</p>
+      </div>
+    </div>
+
+    <div class="progress-section" id="progress-section">
+      <div class="progress-header">
+        <span class="progress-label">Progress</span>
+        <span class="progress-percent" id="progress-percent">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
